@@ -4,6 +4,7 @@ namespace Persistence.Migrations
 {
     public partial class InitialCreate : Migration
     {
+        // up method to create tables
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -20,6 +21,7 @@ namespace Persistence.Migrations
                 });
         }
 
+        // down method to drop table
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

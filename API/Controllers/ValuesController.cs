@@ -11,25 +11,33 @@ namespace DatingApp.API.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        // with private fields it's conventional to have underscore in from of variable
+        // VS Code doesn't add _ automatically but this can be configured in settings for csharpextension (private)
         private readonly DataContext _context;
         public ValuesController(DataContext context)
         {
+            // here this.context is replaced with _context
             _context = context;
         }
 
         // GET api/values
         [HttpGet]
+        // using asynchronous method will make application more scalable
+        // using async method to make a request to the database it will pass query to a different thread
+        // and it will not block the threads where request is coming in
+        // so we will await task to be completed without blocking the request
+        // very useful for long running requests
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
-            var values = await _context.Values.ToListAsync();
-            return Ok(values);
+            var values = await _context.Values.ToListAsync(); // await requires to use async method of ToList
+            return Ok(values); // ok - 200 response
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Value>> Get(int id)
         {
-            var value = await _context.Values.FindAsync(id);
+            var value = await _context.Values.FindAsync(id); // id is our primary key
             return Ok(value);
         }
 

@@ -12,14 +12,16 @@ namespace API
     {
         public static void Main(string[] args)
         {
+            // this host will store what's returned from web host createdefaultbuilder method
             var host = CreateHostBuilder(args).Build();
 
+            // using statement inside method will be cleaned up automatically after it's completed
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DataContext>();
+                    var context = services.GetRequiredService<DataContext>(); // access to DataContext
                     context.Database.Migrate();
                     Seed.SeedData(context);
                 }
